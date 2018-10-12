@@ -1,4 +1,3 @@
-# 2dArray
 package com.company;
 import java.util.*;
 import java.io.*;
@@ -12,6 +11,7 @@ public class Main {
         String arrayStoreFreq[][] = new String [MAXDATA][2];
 
 
+
         // Initialize the array to a known value
         // - loops over each row using "i", and columns using "j"
         // -  sets all array values to INVALID
@@ -21,9 +21,10 @@ public class Main {
                 arrayStoreFreq[i][j] = "invalid";
             }
         }
-        
+
 
         String userFileName;
+        boolean checkUnique = false;
 
         System.out.println("");
         System.out.println("Please type in the file name\n");
@@ -58,6 +59,8 @@ public class Main {
 
             for(int i=0; i < MAXDATA; i++) {
 
+                checkUnique = false;
+
                 // ---------------------------------------------
                 // The scanner checks if there is another string
                 //
@@ -69,29 +72,40 @@ public class Main {
                    String userString =  scanUserFile.next().toLowerCase();
 
 
-                    for (int unique = i; unique>=0; unique--){
-
-                        //Checks if string is replicated
+                   while (!checkUnique) {
 
 
-                        if (userString.equalsIgnoreCase(arrayStoreFreq[unique][0]) ) {
-                                // - add condition  && (userString!= "invalid")
+                       for (int unique = i; unique >= 0; unique--) {
 
-                            //  ADD ONE TO FREQUENCY
-                            System.out.println("\n replicated: " + userString + " " + arrayStoreFreq[unique][0] );
+                           //Checks if string is replicated
+
+                           if (userString.equalsIgnoreCase(arrayStoreFreq[unique][0])) {
+
+                               // - add condition  && (userString!= "invalid")?
+
+                               //  ADD ONE TO FREQUENCY\
+
+                               // arrayStoreFreq[i][0]= "invalid";
+
+                               System.out.println("\n replicated: " + userString + " " + arrayStoreFreq[unique][0] + " " + unique);
+
+                               checkUnique = true;
+
+                           } else {
+
+                               arrayStoreFreq[i][1] = "one";
+
+                               arrayStoreFreq[i][0] = userString;
+
+                               System.out.println(arrayStoreFreq[i][0] + " " + i);
+
+                               checkUnique = true;
+                           }
 
 
+                       }// end for (int unique = MAXDATA-1; unique>=0; unique--){
 
-                        } else {
-
-                            arrayStoreFreq[i][0]= userString;
-
-                            System.out.println(arrayStoreFreq[i][0] + " " + i);
-
-                        }
-
-
-                    }// end for (int unique = MAXDATA-1; unique>=0; unique--){
+                   }// end while !checkUnique
 
 
 
@@ -111,6 +125,10 @@ public class Main {
             }
 
             System.out.println();
+            for (int i = 0; i < MAXDATA; i++) {
+                if (arrayStoreFreq[i][0] != "invalid")
+                System.out.println(arrayStoreFreq[i][0] + " " + i);
+            }
 
             // ---------------------------------------------
             // If the file cannot be found then an exception (error) is generated (thrown) that we have to
