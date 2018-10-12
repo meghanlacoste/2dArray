@@ -1,5 +1,4 @@
 # 2dArray
-
 package com.company;
 import java.util.*;
 import java.io.*;
@@ -13,21 +12,18 @@ public class Main {
         String arrayStoreFreq[][] = new String [MAXDATA][2];
 
 
-// Initialize the array to a known value
-// - loops over each row using "i", and columns using "j"
-// -  sets all array values to INVALID
+        // Initialize the array to a known value
+        // - loops over each row using "i", and columns using "j"
+        // -  sets all array values to INVALID
 
         for(int i=0; i < MAXDATA; i++) {
             for(int j = 0; j < 2; j++){
                 arrayStoreFreq[i][j] = "invalid";
             }
         }
-
-
-
+        
 
         String userFileName;
-
 
         System.out.println("");
         System.out.println("Please type in the file name\n");
@@ -73,22 +69,25 @@ public class Main {
                    String userString =  scanUserFile.next().toLowerCase();
 
 
-                    for (int unique = i-1; unique>=0; unique--){
+                    for (int unique = i; unique>=0; unique--){
 
                         //Checks if string is replicated
 
 
-                        if (userString.equalsIgnoreCase(arrayStoreFreq[unique][0]) && (userString!= "invalid") ) {
+                        if (userString.equalsIgnoreCase(arrayStoreFreq[unique][0]) ) {
+                                // - add condition  && (userString!= "invalid")
 
                             //  ADD ONE TO FREQUENCY
-                            System.out.println("\n replicated " + userString + arrayStoreFreq[unique][0] );
+                            System.out.println("\n replicated: " + userString + " " + arrayStoreFreq[unique][0] );
+
 
 
                         } else {
 
-                            arrayStoreFreq[i][0]=  userString;
+                            arrayStoreFreq[i][0]= userString;
 
-                            System.out.println(arrayStoreFreq[i][0]);
+                            System.out.println(arrayStoreFreq[i][0] + " " + i);
+
                         }
 
 
@@ -124,26 +123,6 @@ public class Main {
             System.out.println(e);
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
