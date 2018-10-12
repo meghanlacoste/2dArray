@@ -90,6 +90,7 @@ public class Main {
                                System.out.println("\n replicated: " + userString + " " + arrayStoreFreq[unique][0] + " " + unique);
 
                                checkUnique = true;
+                               break;
 
                            } else {
 
@@ -100,6 +101,7 @@ public class Main {
                                System.out.println(arrayStoreFreq[i][0] + " " + i);
 
                                checkUnique = true;
+                               break;
                            }
 
 
