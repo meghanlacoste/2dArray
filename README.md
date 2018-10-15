@@ -5,7 +5,7 @@ import static com.company.ProjConstants.*;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        // write your code here
 
         // Create 2- dimensional String (aka. matrix) that Stores Strings and counts frequency (arrayStoreFreq)
         String arrayStoreFreq[][] = new String [MAXDATA][2];
@@ -25,6 +25,7 @@ public class Main {
 
         String userFileName;
         boolean checkUnique = false;
+        boolean fileDone = false;
 
         System.out.println("");
         System.out.println("Please type in the file name\n");
@@ -69,68 +70,95 @@ public class Main {
 
                     // converts string to lower case
 
-                   String userString =  scanUserFile.next().toLowerCase();
+                    String userString =  scanUserFile.next().toLowerCase();
 
 
-                   while (!checkUnique) {
+                   // while (!checkUnique) {
 
 
-                       for (int unique = i; unique >= 0; unique--) {
+                        for (int unique = i; unique >= 0; unique--) {
 
-                           //Checks if string is replicated
+                            //Checks if string is replicated
 
-                           if (userString.equalsIgnoreCase(arrayStoreFreq[unique][0])) {
+                            // if the string equals the string
+                            if (userString.equalsIgnoreCase(arrayStoreFreq[unique][0])) {
 
-                               // - add condition  && (userString!= "invalid")?
+                                //  Adds to the frequency
 
-                               //  ADD ONE TO FREQUENCY\
+                                int frequency = Integer.parseInt(arrayStoreFreq[unique][1]);
 
-                               // arrayStoreFreq[i][0]= "invalid";
+                                frequency  += 1 ;
 
-                               System.out.println("\n replicated: " + userString + " " + arrayStoreFreq[unique][0] + " " + unique);
+                                arrayStoreFreq [unique][1] = Integer.toString(frequency);
 
-                               checkUnique = true;
-                               break;
+                                System.out.println("\n replicated: " + userString + " " + arrayStoreFreq[unique][0] + " " + unique + " frequency " + arrayStoreFreq [unique][1]);
 
-                           } else {
+                              //  checkUnique = true;
+                               // break;
 
-                               arrayStoreFreq[i][1] = "one";
-
-                               arrayStoreFreq[i][0] = userString;
-
-                               System.out.println(arrayStoreFreq[i][0] + " " + i);
-
-                               checkUnique = true;
-                               break;
-                           }
+                            } else {
 
 
-                       }// end for (int unique = MAXDATA-1; unique>=0; unique--){
-
-                   }// end while !checkUnique
+                                arrayStoreFreq[i][0] = userString;
 
 
+                                // adds 1 to the frequency of the unique variable. Converts string to int
 
-                }
+                               //  int frequency2 = Integer.parseInt(arrayStoreFreq[i][1]);
+
+                                int frequency2=0;
+                                  frequency2  += 1 ;
+
+                                arrayStoreFreq [i][1] = Integer.toString(frequency2);
+
+
+                                System.out.println(arrayStoreFreq[i][0] + " " + i + " frequency " + arrayStoreFreq [i][1] );
+
+                              //  checkUnique = true;
+                             //   break;
+                            }
+
+
+                        }// end for (int unique = MAXDATA-1; unique>=0; unique--){
+
+               //     }// end while !checkUnique
+
+
+
+                }// if scanner has next
                 else {
                     // ---------------------------------------------
                     // The scanner detected no other integers
-                    // - closes the scanner for the file
+                    // - sets boolean "fileDone" to true
+                    // - closes the scanner
                     // - breaks out of the for loop
                     //
-                    System.out.print("\n\nDataFileFILE has been completely READ");
-                    scanUserFile.close();
 
-                    // A break statement allows us to exit the loop before we have reach the end
+                    fileDone = true;
+                    scanUserFile.close();
                     break;
                 }
             }
 
+            // ---------------------------------------------
+            // The file has been completely read into the array, so the user is notified.
+            //
+
             System.out.println();
-            for (int i = 0; i < MAXDATA; i++) {
-                if (arrayStoreFreq[i][0] != "invalid")
-                System.out.println(arrayStoreFreq[i][0] + " " + i);
+            if (fileDone) {
+                System.out.println("\n\tFile data has been read into array");
+
             }
+
+        // ---------------------------------------------
+        // If there is not enough space in the array so make sure the user is notified that the file contains
+        // more data than the array can hold.
+        //
+
+        if (!fileDone) {
+            System.out.println("\n\tCAUTION: file has additional data, consider making array larger.");
+        }
+
 
             // ---------------------------------------------
             // If the file cannot be found then an exception (error) is generated (thrown) that we have to
@@ -144,17 +172,26 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println();
+        for (int i = 0; i < MAXDATA; i++) {
+            if (arrayStoreFreq[i][0] != "invalid")
+                System.out.println(arrayStoreFreq[i][0]+ " " + i + " frequency " + arrayStoreFreq [i][1]);
 
+        }
 
 
     }// END MAIN METHOD
 }// END MAIN CLASS
+
+
+
 /*
 Import Java utilities
 
 Main Class
 
 Main Method
+
 
 
 Create 2- dimensional String (aka. matrix) that Stores Strings and counts frequency (arrayStoreFreq)
