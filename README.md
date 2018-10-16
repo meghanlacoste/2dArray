@@ -4,6 +4,9 @@ import java.io.*;
 import static com.company.ProjConstants.*;
 public class Main {
 
+
+    public static final int MAXDATA = 100;
+
     public static void main(String[] args) {
         // write your code here
 
@@ -25,8 +28,9 @@ public class Main {
 
 
         String userFileName;
-        boolean uniqueWord;
+        boolean replicatedWord;
         boolean fileDone = false;
+
 
 
 
@@ -64,7 +68,7 @@ public class Main {
 
             for(int i = 0; i < MAXDATA; i++) {
 
-                uniqueWord = false;
+                replicatedWord = false;
 
                 // ---------------------------------------------
                 // The scanner checks if there is another string
@@ -87,13 +91,13 @@ public class Main {
 
                             arrayStoreFreq [index][1] = Integer.toString(frequency);
 
-                            uniqueWord = true;
+                            replicatedWord = true;
 
                         }
 
                     }
 
-                    if (!uniqueWord) {
+                    if (!replicatedWord) {
 
                         // stores the word from the file in the next position of the array
                         arrayStoreFreq[i][0] = fileWord;
@@ -161,32 +165,32 @@ public class Main {
 
 
 
-            // Displays Results
+        // Displays Results
 
-            System.out.println("==========================================================================================");
+        System.out.println("==========================================================================================");
 
         System.out.println("\n          WORD:            FREQUENCY:  \n");
 
-            for (int i = 0; i < MAXDATA; i++) {
-                 if (arrayStoreFreq[i][0] != "invalid") {
+        for (int i = 0; i < MAXDATA; i++) {
+            if (arrayStoreFreq[i][0] != "invalid") {
 
-                      System.out.printf("    %10.1000000000s\t %10.1000000s\n", arrayStoreFreq[i][0], arrayStoreFreq[i][1]);
+                System.out.printf("    %10.1000000000s\t %10.1000000s\n", arrayStoreFreq[i][0], arrayStoreFreq[i][1]);
 
-                 }
-             }
+            }
+        }
 
-             System.out.println();
+        System.out.println();
 
-            System.out.println("==========================================================================================\n");
+        System.out.println("==========================================================================================\n");
 
 
-            String subStrings [][] = new String [MAXDATA][3];
+        String subStrings [][] = new String [MAXDATA][3];
 
-            // first columns [][0] will be the substring
+        // first columns [][0] will be the substring
 
-            // second column [][1] will be frequency of substring
+        // second column [][1] will be frequency of substring
 
-            // third column [][2] will be lists of words containing that substring
+        // third column [][2] will be lists of words containing that substring
 
         // Initialize the array to a known value
         // - loops over each row using "i", and columns using "j"
@@ -200,31 +204,57 @@ public class Main {
 
 
 
-        for (int i = 0; i < MAXDATA; i++){
-            for (int index = i; index >= 0; index --)
+
+        for (int i = 0; i < MAXDATA; i++) {
 
 
-            if (arrayStoreFreq[i][0].contains(arrayStoreFreq [index][0]) && (arrayStoreFreq[i][0] != "invalid") && (i !=index)) {
-
-                 int frequency = Integer.parseInt(arrayStoreFreq[index][1]);
-
-                frequency += 1;
-
-                subStrings[i][0] = arrayStoreFreq[index][0];
-
-                subStrings[i][1] = Integer.toString(frequency);
-
-                subStrings[i][2] = arrayStoreFreq[i][0];
+            for (int index = i; index >= 0; index--)
 
 
-                System.out.println(" word: " + arrayStoreFreq[i][0] + " contains: " + arrayStoreFreq [index][0]);
+                if (arrayStoreFreq[i][0].contains(arrayStoreFreq[index][0]) && (arrayStoreFreq[i][0] != "invalid") && (i != index)) {
+
+                    int frequency = Integer.parseInt(arrayStoreFreq[index][1]);
+
+                    frequency = 1;
+
+                    subStrings[i][0] = arrayStoreFreq[index][0];
+
+                    subStrings[i][1] = Integer.toString(frequency);
+
+                    subStrings[i][2] = arrayStoreFreq[i][0];
 
 
+                }
+
+        } // for (int i = 0; i < MAXDATA; i++)
 
 
+                  // will check if any substrings are replicated
 
-            }
-        }
+
+                    for (int i = 0; i < MAXDATA; i++) {
+
+                    for (int index = i; index >= 0; index --) {
+
+                        if (subStrings[index][0].equalsIgnoreCase(subStrings[i][0]) && (subStrings[i][0] != "invalid") && (i != index) ) {
+
+                            subStrings[index][2] += (", " + subStrings [i][2]);
+
+                            subStrings [i][0] = "invalid";
+                            subStrings [i][1] = "invalid";
+                            subStrings [i][2] = "invalid";
+
+                             int frequency = Integer.parseInt(subStrings[index][1]);
+                             frequency  += 1 ;
+                             subStrings [index][1] = Integer.toString(frequency);
+
+
+                        }
+
+                    }
+
+                }
+
 
 
         System.out.println("==========================================================================================");
@@ -249,21 +279,3 @@ public class Main {
     }// END MAIN METHOD
 }// END MAIN CLASS
 
-
-
-
-/*
-- Create two 2 dimensional arrays
-- The first 2 Dimensional array is to be used to store strings, and the frequency a particular string occurs in a file
-- Have the user provide the name of a file to be read
-- strings (words) in the file are all to be converted into upper, or lower, case before being stored in the array, column 1,
- and the frequency is to be stored in column 2
-- output the list of words and their frequency neatly to the screen
-- once the file has been completely read it is to be closed
-- use the data stored in the 2 Dimensional array (3 columns) and find all words that are sub-strings of others in the array,
-store these in the first column of the new 2 Dimensional array, store the frequency in the second column, and store the list of words
-containing the sub-string in the third column
-
-All programs must have white space (blank lines) to help make the code more readable, use indentation for loops, conditionals and methods,
-be appropriately commented, and use descriptive variable names.
- */
