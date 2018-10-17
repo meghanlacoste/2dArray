@@ -8,11 +8,11 @@ public class Main {
     public static final int MAXDATA = 100;
 
     public static void main(String[] args) {
-        // write your code here
 
-        // Create 2- dimensional String (aka. matrix) that Stores Strings and counts frequency (arrayStoreFreq)
-        String arrayStoreFreq[][] = new String [MAXDATA][2];
 
+
+        // Creates a  2- dimensional String (aka. matrix) that Stores Strings and counts frequency (arrayStoreFreq)
+        String arr_StoreFreq[][] = new String [MAXDATA][2];
 
 
         // Initialize the array to a known value
@@ -21,18 +21,24 @@ public class Main {
 
         for(int i=0; i < MAXDATA; i++) {
             for(int j = 0; j < 2; j++){
-                arrayStoreFreq[i][j] = "invalid";
+                arr_StoreFreq[i][j] = "INVALID";
             }
         }
 
 
+        // -------------------------------------------------------------------------
+
+
+        // INITIALIZES/DECLARES VARIABLES:
 
         String userFileName;
         boolean replicatedWord;
         boolean fileDone = false;
 
 
+        // -------------------------------------------------------------------------
 
+        // Requests user for file name
 
         System.out.println("");
         System.out.println("Please type in the file name\n");
@@ -48,7 +54,8 @@ public class Main {
 
 
 
-        // ---------------------------------------------
+        // -------------------------------------
+        //
         // This is where we "try" to process the file
         //
 
@@ -68,9 +75,12 @@ public class Main {
 
             for(int i = 0; i < MAXDATA; i++) {
 
+
+                // sets boolean back to false at the start of each repetition
                 replicatedWord = false;
 
-                // ---------------------------------------------
+
+                // --------------------------------------------------
                 // The scanner checks if there is another string
                 //
 
@@ -81,15 +91,21 @@ public class Main {
                     String fileWord =  scanUserFile.next().toLowerCase();
 
 
+                    // starting at the current index position 'i', loops backwards over previously stored
+                    // strings in the array and checks if the file word is equal to any of the previous values
+
                     for (int index = i; index >= 0; index --) {
 
-                        if (fileWord.equalsIgnoreCase(arrayStoreFreq[index][0])) {
+                        if (fileWord.equalsIgnoreCase(arr_StoreFreq[index][0])) {
 
-                            int frequency = Integer.parseInt(arrayStoreFreq[index][1]);
+                            // converts string stored in array to integer
+                            int frequency = Integer.parseInt(arr_StoreFreq[index][1]);
 
+                            // adds one to the frequency
                             frequency  += 1 ;
 
-                            arrayStoreFreq [index][1] = Integer.toString(frequency);
+                            // stores the new frequency as a string
+                            arr_StoreFreq [index][1] = Integer.toString(frequency);
 
                             replicatedWord = true;
 
@@ -97,10 +113,15 @@ public class Main {
 
                     }
 
+                    // ---------------------------------------
+                    //
+                    //  pre-conditions:
+                    //      - the word is unique
+
                     if (!replicatedWord) {
 
                         // stores the word from the file in the next position of the array
-                        arrayStoreFreq[i][0] = fileWord;
+                        arr_StoreFreq[i][0] = fileWord;
 
                         // The frequency of the unique variable will be set to an initial value of 1.
 
@@ -108,7 +129,7 @@ public class Main {
 
                         // the value of 1 will be converted into a string type so that it can be stored in the second colomn of the array.
 
-                        arrayStoreFreq [i][1] = Integer.toString(frequency2);
+                        arr_StoreFreq [i][1] = Integer.toString(frequency2);
 
 
                     }
@@ -164,33 +185,15 @@ public class Main {
         }
 
 
+        //-----------------------------------------------------------------------------------------------------
 
-        // Displays Results
+        // creates new 2d array with 3 columns
+        String arr_subStrings [][] = new String [MAXDATA][3];
 
-        System.out.println("==========================================================================================");
-
-        System.out.println("\n          WORD:            FREQUENCY:  \n");
-
-        for (int i = 0; i < MAXDATA; i++) {
-            if (arrayStoreFreq[i][0] != "invalid") {
-
-                System.out.printf("    %10.1000000000s\t %10.1000000s\n", arrayStoreFreq[i][0], arrayStoreFreq[i][1]);
-
-            }
-        }
-
-        System.out.println();
-
-        System.out.println("==========================================================================================\n");
-
-
-        String subStrings [][] = new String [MAXDATA][3];
-
-        // first columns [][0] will be the substring
-
-        // second column [][1] will be frequency of substring
-
-        // third column [][2] will be lists of words containing that substring
+        // The data to be stored in each column is as follows:
+        //      - first columns [][0] will be the substring
+        //      - second column [][1] will be frequency of substring
+        //      - third column [][2] will be lists of words containing that substring
 
         // Initialize the array to a known value
         // - loops over each row using "i", and columns using "j"
@@ -198,10 +201,9 @@ public class Main {
 
         for(int i=0; i < MAXDATA; i++) {
             for(int j = 0; j < 2; j++){
-                subStrings[i][j] = "invalid";
+                arr_subStrings[i][j] = "INVALID";
             }
         }
-
 
 
 
@@ -211,17 +213,17 @@ public class Main {
             for (int index = i; index >= 0; index--)
 
 
-                if (arrayStoreFreq[i][0].contains(arrayStoreFreq[index][0]) && (arrayStoreFreq[i][0] != "invalid") && (i != index)) {
+                if (arr_StoreFreq[i][0].contains(arr_StoreFreq[index][0]) && (arr_StoreFreq[i][0] != "INVALID") && (i != index)) {
 
-                    int frequency = Integer.parseInt(arrayStoreFreq[index][1]);
+                    int frequency = Integer.parseInt(arr_StoreFreq[index][1]);
 
                     frequency = 1;
 
-                    subStrings[i][0] = arrayStoreFreq[index][0];
+                    arr_subStrings[i][0] = arr_StoreFreq[index][0];
 
-                    subStrings[i][1] = Integer.toString(frequency);
+                    arr_subStrings[i][1] = Integer.toString(frequency);
 
-                    subStrings[i][2] = arrayStoreFreq[i][0];
+                    arr_subStrings[i][2] = arr_StoreFreq[i][0];
 
 
                 }
@@ -229,42 +231,76 @@ public class Main {
         } // for (int i = 0; i < MAXDATA; i++)
 
 
-                  // will check if any substrings are replicated
+        // loops over subStrings array to check if any substrings are replicated
+
+        for (int i = 0; i < MAXDATA; i++) {
+
+            for (int index = i; index >= 0; index --) {
+
+                //pre-conditions:
+                //      - the substring stored is equal to another substring already stored in the array
+                //      - the string stored is not the default set "INVALID"
+                //      - the two substrings being compared are not at the same index position in the array
+                //
 
 
-                    for (int i = 0; i < MAXDATA; i++) {
+                if (arr_subStrings[index][0].equalsIgnoreCase(arr_subStrings[i][0]) && (arr_subStrings[i][0] != "INVALID") && (i != index) ) {
 
-                    for (int index = i; index >= 0; index --) {
+                    // adds the word containing substring to the list in the row where the substring first appears
+                    arr_subStrings[index][2] += (", " + arr_subStrings [i][2]);
 
-                        if (subStrings[index][0].equalsIgnoreCase(subStrings[i][0]) && (subStrings[i][0] != "invalid") && (i != index) ) {
-
-                            subStrings[index][2] += (", " + subStrings [i][2]);
-
-                            subStrings [i][0] = "invalid";
-                            subStrings [i][1] = "invalid";
-                            subStrings [i][2] = "invalid";
-
-                             int frequency = Integer.parseInt(subStrings[index][1]);
-                             frequency  += 1 ;
-                             subStrings [index][1] = Integer.toString(frequency);
+                    // sets all values in the row where the substring is repeated
+                    // back to the default "INVALID" removing the replication
+                    //
+                    arr_subStrings [i][0] = "INVALID";
+                    arr_subStrings [i][1] = "INVALID";
+                    arr_subStrings [i][2] = "INVALID";
 
 
-                        }
-
-                    }
-
-                }
 
 
+                    // converts string stored in array to integer
+                    int frequency = Integer.parseInt(arr_subStrings[index][1]);
+
+                    // adds one to the frequency of the substring
+                    frequency  += 1 ;
+
+                    // stores the new frequency as a string
+                    arr_subStrings [index][1] = Integer.toString(frequency);
+
+
+                } // END if (arr_subStrings[index][0].equalsIgnoreCase(arr_subStrings[i][0]) && (arr_subStrings[i][0] != "INVALID") && (i != index) )
+
+            }// END for (int index = i; index >= 0; index --) {
+
+        }// END for (int i = 0; i < MAXDATA; i++)
+
+        // Displays Results
 
         System.out.println("==========================================================================================");
+
+        System.out.println("\n          WORD:            FREQUENCY:  \n");
+
+        for (int i = 0; i < MAXDATA; i++) {
+            if (arr_StoreFreq[i][0] != "INVALID") {
+
+                System.out.printf("    %10.1000000000s\t %10.1000000s\n\n", arr_StoreFreq[i][0], arr_StoreFreq[i][1]);
+
+            }
+        }
+
+        System.out.println();
+
+        System.out.println("==========================================================================================\n");
+
+
 
         System.out.println("\n          SUBSTRING:            FREQUENCY:        WORDS CONTAINING SUBSTRING: \n");
 
         for (int i = 0; i < MAXDATA; i++) {
-            if (subStrings[i][0] != "invalid") {
+            if (arr_subStrings[i][0] != "INVALID") {
 
-                System.out.printf("     %10.1000000000s\t\t\t%10.1000000s\t\t\t\t %10.1000000s\n", subStrings[i][0], subStrings[i][1],  subStrings[i][2]);
+                System.out.printf("     %10.1000000000s\t\t\t%10.1000000s\t\t\t\t %10.1000000s\n\n", arr_subStrings[i][0], arr_subStrings[i][1],  arr_subStrings[i][2]);
 
             }
         }
